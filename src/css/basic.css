@@ -1,0 +1,36 @@
+.flex {
+    display:flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.h-100 {
+    height:100%;
+}
+
+.w-20r {
+    width: 20rem;
+}
+
+.pt-2 {
+    padding-top:1rem;
+}
+
+.pb-2 {
+    padding-bottom:1rem;
+}
+
+.mt-2 {
+    margin-top:2rem;
+}
