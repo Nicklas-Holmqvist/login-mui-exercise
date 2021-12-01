@@ -8,16 +8,16 @@ function CreateForm() {
     const controlPassword = 'Confirm password'
     
     const [buttonLabel, setButtonLabel] = useState<string>('Create')
-    const [inputValue, setInputValue] = useState({
+    const [inputValue, setInputValue] = useState<{username:string, password:string, controlPassword:string}>({
         username: "",
         password: "",
         controlPassword: ""
     })
 
-    const [errors, setErrors] = useState<{username:boolean, password:boolean, controlPassword:boolean}>({
-        username: false,
-        password: false,
-        controlPassword: false
+    const [errors, setErrors] = useState<{username:any, password:any, controlPassword:any}>({
+        username: undefined,
+        password: undefined,
+        controlPassword: undefined
     })
     const [helperText, setHelperText] = useState<{username:string, password:string, controlPassword:string}>({
         username: "",
@@ -63,37 +63,11 @@ function CreateForm() {
         errorPassword()
         erroUsername()
 
-        setErrorMessage()
-
-        const valid = Object.values(errors).every(Boolean)
+        const valid = Object.values(errors).every(item => item === false)
 
         if(valid) {
             // setLoadingButton(true)
             resetInput()
-        }
-    }
-
-    function setErrorMessage() {
-        for(const [key, value] of Object.entries(errors)) {
-            if(key === 'username' && value === true) {
-                console.log(key, value)
-                setHelperText({
-                    ...helperText,
-                    username: "There is something wrong with the email"
-                });
-            }
-            if(key === 'password' && value === true) {
-                setHelperText({
-                    ...helperText,
-                    password: "The password is wrong"
-                });
-            }
-            if(key === 'controlPassword' && value === true) {
-                setHelperText({
-                    ...helperText,
-                    controlPassword: "The password does not match"
-                });
-            }
         }
     }
 
@@ -105,7 +79,10 @@ function CreateForm() {
                 ...errors,
                 username: true
             });            
-            console.log(errors.username)
+            setHelperText({
+                ...helperText,
+                username: "Email format ex. myname@domain.com"
+            });
         }
     }
 
@@ -114,7 +91,11 @@ function CreateForm() {
             setErrors({
                 ...errors,
                 password: true
-            });           
+            });       
+            setHelperText({
+                ...helperText,
+                password: "The password needs more than 5 characters"
+            });
         }
     }
 
@@ -123,13 +104,18 @@ function CreateForm() {
             setErrors({
                 ...errors,
                 controlPassword: true
-            });           
+            });    
+            setHelperText({
+                ...helperText,
+                controlPassword: "The password does not match"
+            });          
         }
     }
 
     return(
         <div className="flex column w-20r">
             <TextField
+                required
                 autoFocus
                 variant="standard"
                 name="username"
@@ -139,9 +125,10 @@ function CreateForm() {
                 onChange={handleChange}
                 type="email"
                 error={errors.username}
-                helperText={helperText.username}
             />
+            {errors.username && <p>{helperText.username}</p>}
             <TextField 
+                required
                 name="password"
                 variant="standard"
                 margin="normal" 
@@ -150,9 +137,10 @@ function CreateForm() {
                 onChange={handleChange}
                 type="password"
                 error={errors.password}
-                helperText={helperText.password}
             />
+            {errors.password && <p>{helperText.password}</p>}
             <TextField 
+                required
                 name="controlPassword"
                 variant="standard"
                 margin="normal" 
@@ -161,8 +149,8 @@ function CreateForm() {
                 onChange={handleChange}
                 type="password"
                 error={errors.controlPassword}
-                helperText={helperText.controlPassword}
-            />
+                />
+            {errors.controlPassword && <p>{helperText.controlPassword}</p>}
             <div className="mt-2 w-20r">
                 <Button  onClick={validate} size="large" variant="contained" color="primary">{buttonLabel}</Button>  
             </div>
