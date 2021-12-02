@@ -1,3 +1,4 @@
+// importeras in till FormSignup och ner i useForm
 export default function validateInfo(values:any) {
     let errors: {username: string, email:string, password:string, password2:string} = {
         username: "",

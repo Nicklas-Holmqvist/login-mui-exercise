@@ -23,10 +23,13 @@ const useForm = (callback:any, validate:any) => {
         })
     }
 
+    // Submit button in form
     const handleSubmit = (e:any) => {
         e.preventDefault();
 
+        //Send values into validate from validateInfo.tsx
         setErrors(validate(values));
+
         setIsSubmitting(true)
     }
 

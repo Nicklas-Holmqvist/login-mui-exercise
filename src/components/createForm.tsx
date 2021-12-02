@@ -1,7 +1,10 @@
 import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import validations from "./validation";
 
 function CreateForm() {
+
+    const {valids} = validations()
     
     const username = 'Email'
     const password = 'Password'
@@ -39,8 +42,7 @@ function CreateForm() {
         setInputValue({
             ...inputValue,
             [e.target.name]: value
-        })
-        resetValidation()        
+        })     
     }
 
     function resetValidation() {
@@ -59,57 +61,30 @@ function CreateForm() {
     }
 
     function validate() {
-        errorControlPassword()
-        errorPassword()
-        erroUsername()
-
+        setErrors(valids(inputValue))
+        errorTexts(valids(inputValue))
         const valid = Object.values(errors).every(item => item === false)
+        console.log(valid)
 
         if(valid) {
             // setLoadingButton(true)
-            resetInput()
+            // resetInput()
         }
-    }
+    }    
 
-    function erroUsername() {
-        const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                
-        if(!inputValue.username.match(regexEmail)) {
-            setErrors({
-                ...errors,
-                username: true
-            });            
-            setHelperText({
-                ...helperText,
-                username: "Email format ex. myname@domain.com"
-            });
-        }
-    }
-
-    function errorPassword() {
-        if(inputValue.password.length <= 5) {
-            setErrors({
-                ...errors,
-                password: true
-            });       
-            setHelperText({
-                ...helperText,
-                password: "The password needs more than 5 characters"
-            });
-        }
-    }
-
-    function errorControlPassword() {
-        if(inputValue.controlPassword !== inputValue.password) {
-            setErrors({
-                ...errors,
-                controlPassword: true
-            });    
-            setHelperText({
-                ...helperText,
-                controlPassword: "The password does not match"
-            });          
-        }
+    function errorTexts(errors:any):any {
+    
+        if(errors.username) {
+            helperText.username = "Email format ex. myname@domain.com"       
+        } else helperText.username = ""
+    
+        if(errors.password) {
+            helperText.password = "The password needs more than 5 characters"      
+        } else helperText.password = ""
+    
+        if(errors.controlPassword) {
+            helperText.controlPassword = "The password does not match"       
+        } else helperText.controlPassword = ""   
     }
 
     return(
@@ -125,8 +100,8 @@ function CreateForm() {
                 onChange={handleChange}
                 type="email"
                 error={errors.username}
+                helperText={helperText.username}
             />
-            {errors.username && <p>{helperText.username}</p>}
             <TextField 
                 required
                 name="password"
@@ -137,8 +112,8 @@ function CreateForm() {
                 onChange={handleChange}
                 type="password"
                 error={errors.password}
+                helperText={helperText.password}
             />
-            {errors.password && <p>{helperText.password}</p>}
             <TextField 
                 required
                 name="controlPassword"
@@ -149,8 +124,8 @@ function CreateForm() {
                 onChange={handleChange}
                 type="password"
                 error={errors.controlPassword}
+                helperText={helperText.controlPassword}
                 />
-            {errors.controlPassword && <p>{helperText.controlPassword}</p>}
             <div className="mt-2 w-20r">
                 <Button  onClick={validate} size="large" variant="contained" color="primary">{buttonLabel}</Button>  
             </div>
