@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import FormSignup from './FormSignup'
 import FormSuccess from './FormSuccess'
 
+// testform is a method Brian Design have an video on for validation of all inputfields
+// link to video: https://www.youtube.com/watch?v=KGFG-yQD7Dw
+
 function Form() {
     const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -20,8 +23,5 @@ function Form() {
         </>
     )
 }
-
-// testform is a method Brian Design have an video on for validation of all inputfields
-// link to video: https://www.youtube.com/watch?v=KGFG-yQD7Dw
 
 export default Form

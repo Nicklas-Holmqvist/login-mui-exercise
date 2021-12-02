@@ -1,13 +1,12 @@
-
 export interface IUser {
     username:string,
     password:string,
-    controlPassword?:string
+    controlPassword?:string,
 }
-    
     
 export interface IError {
     username:boolean,
     password:boolean,
-    controlPassword?:boolean
+    controlPassword?:boolean,
+    doubleUser?:boolean
 }

@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import validations from "./validation";
 import {IUser, IError} from '../interface/user'
 
-function CreateForm() {
+function CreateForm(props:any) {
 
     const {validCreate} = validations()
     
     const username: string = 'Email'
     const password: string = 'Password'
-    const controlPassword: string = 'Confirm password'
-    
+    const controlPassword: string = 'Confirm password'    
     const buttonLabel: string = 'Create'
+    
     const [inputValue, setInputValue] = useState<IUser>({
         username: "",
         password: "",
@@ -23,7 +23,7 @@ function CreateForm() {
         password: false,
         controlPassword: false
     })
-    const helperText: IUser = ({
+    const [helperText, ] = useState<IUser>({
         username: "",
         password: "",
         controlPassword: ""
@@ -55,18 +55,19 @@ function CreateForm() {
         const valid = Object.values(validCreate(inputValue)).every(item => item === false)
 
         if(valid) {
-            console.log('allt ok!')
             localStorage.setItem('user', JSON.stringify({username: inputValue.username, password: inputValue.password}))
             resetInput()
+            props.goLogin()
         }
     }    
 
     /**
      * Controls the errors and set the helptext on the inputs with errors
      * @param errors Array of errors
-     * @returns 
+     * @returns just to end the function
      */
     function errorTexts(errors:IError) {    
+        if(errors.doubleUser) return helperText.username = "This email is already in use"; else helperText.controlPassword = ""   
         if(errors.username) helperText.username = "Email format ex. myname@domain.com"; else helperText.username = ""    
         if(errors.password) helperText.password = "The password needs more than 5 characters"; else helperText.password = ""    
         if(errors.controlPassword) helperText.controlPassword = "The password does not match"; else helperText.controlPassword = ""   

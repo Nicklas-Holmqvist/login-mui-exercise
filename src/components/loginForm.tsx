@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import validations from './validation'
 import {IUser, IError} from '../interface/user'
 
-function LoginForm() {
+function LoginForm(props:any) {
 
     const {validLogin} = validations()
+
     const username:string = 'Email'
     const password:string = 'Password'
     const buttonLabel:string = 'Login'
-    const [inputValue, setInputValue] = useState({
+
+    const [inputValue, setInputValue] = useState<IUser>({
         username: "",
         password: "",
     })
@@ -22,6 +24,7 @@ function LoginForm() {
         password: "",
     })
 
+    /** Resets the input fields when successfully login */
     function resetInput() {
         setInputValue({
             username: "",
@@ -29,6 +32,7 @@ function LoginForm() {
         })    
     }
 
+    /** Handle the input changes */
     function handleChange(e:any) {
         const value = e.target.value;
 
@@ -38,15 +42,22 @@ function LoginForm() {
         })     
     }
 
+    /** validate the input data */
     function validate() {
         setErrors(validLogin(inputValue))
         errorTexts(validLogin(inputValue))
         const valid = Object.values(validLogin(inputValue)).every(item => item === false)
         if(valid) {
+            props.loggedIn(true)
             resetInput()
         }
     }
 
+    /**
+     * 
+     * @param errors Fetch the errors from validation.tsx and set the helperText on the fields with errors
+     * @returns Just to end the function
+     */
     function errorTexts(errors:IError) {    
         if(errors.username) helperText.username = "There is something wrong with the email"; else helperText.username = ""    
         if(errors.password && (errors.username || !errors.username)) helperText.password = "The password is wrong"; else helperText.password = ""
