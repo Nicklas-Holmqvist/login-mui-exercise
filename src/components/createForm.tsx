@@ -1,18 +1,7 @@
 import { Button, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import validations from "./validation";
-
-interface User {
-    username:string,
-    password:string,
-    controlPassword:string
-}
-
-interface Error {
-    username:any,
-    password:any,
-    controlPassword:any
-}
+import {IUser, IError} from '../interface/user'
 
 function CreateForm() {
 
@@ -23,23 +12,24 @@ function CreateForm() {
     const controlPassword: string = 'Confirm password'
     
     const buttonLabel: string = 'Create'
-    const [inputValue, setInputValue] = useState<User>({
+    const [inputValue, setInputValue] = useState<IUser>({
         username: "",
         password: "",
         controlPassword: ""
     })
 
-    const [errors, setErrors] = useState<Error>({
-        username: undefined,
-        password: undefined,
-        controlPassword: undefined
+    const [errors, setErrors] = useState<IError>({
+        username: false,
+        password: false,
+        controlPassword: false
     })
-    const [helperText, setHelperText] = useState<User>({
+    const helperText: IUser = ({
         username: "",
         password: "",
         controlPassword: ""
     })
 
+    /** Handle input changes */
     function handleChange(e:any) {
         const value = e.target.value;
 
@@ -49,6 +39,7 @@ function CreateForm() {
         })     
     }
 
+    /** Reset inputs after successfull login */
     function resetInput() {
         setInputValue({
             username: "",
@@ -57,11 +48,12 @@ function CreateForm() {
         })
     }
 
+    /** Validates the users input */
     function validate() {
         setErrors(validCreate(inputValue))
         errorTexts(validCreate(inputValue))
         const valid = Object.values(validCreate(inputValue)).every(item => item === false)
-        
+
         if(valid) {
             console.log('allt ok!')
             localStorage.setItem('user', JSON.stringify({username: inputValue.username, password: inputValue.password}))
@@ -69,7 +61,12 @@ function CreateForm() {
         }
     }    
 
-    function errorTexts(errors:Error) {    
+    /**
+     * Controls the errors and set the helptext on the inputs with errors
+     * @param errors Array of errors
+     * @returns 
+     */
+    function errorTexts(errors:IError) {    
         if(errors.username) helperText.username = "Email format ex. myname@domain.com"; else helperText.username = ""    
         if(errors.password) helperText.password = "The password needs more than 5 characters"; else helperText.password = ""    
         if(errors.controlPassword) helperText.controlPassword = "The password does not match"; else helperText.controlPassword = ""   

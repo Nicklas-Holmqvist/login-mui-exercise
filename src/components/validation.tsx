@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 const validations = () => {
 
     const validLogin = (values:any) => {
@@ -22,7 +20,7 @@ const validations = () => {
             password: false,
             controlPassword: false
         })    
-        const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const regexEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
                 
         if(!values.username.match(regexEmail)) errors.username = true; else errors.username = false
         if(values.password.length <= 5) errors.password = true; else errors.password = false

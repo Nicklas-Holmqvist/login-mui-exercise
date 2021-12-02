@@ -1,34 +1,23 @@
-
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import validations from './validation'
+import {IUser, IError} from '../interface/user'
 
-interface User {
-    username:string,
-    password:string
-}
-
-interface Error {
-    username:any,
-    password:any
-}
-
-function LoginForm(props:any) {
+function LoginForm() {
 
     const {validLogin} = validations()
-    const username = 'Email'
-    const password = 'Password'
-    const controlPassword = 'Control password'
-    const [buttonLabel, setButtonLabel] = useState<string>('Login')
+    const username:string = 'Email'
+    const password:string = 'Password'
+    const buttonLabel:string = 'Login'
     const [inputValue, setInputValue] = useState({
         username: "",
         password: "",
     })
-    const [errors, setErrors] = useState<{username:boolean, password:boolean}>({
+    const [errors, setErrors] = useState<IError>({
         username: false,
         password: false,
     })
-    const [helperText, setHelperText] = useState<{username:string, password:string}>({
+    const [helperText, ] = useState<IUser>({
         username: "",
         password: "",
     })
@@ -58,7 +47,7 @@ function LoginForm(props:any) {
         }
     }
 
-    function errorTexts(errors:Error) {    
+    function errorTexts(errors:IError) {    
         if(errors.username) helperText.username = "There is something wrong with the email"; else helperText.username = ""    
         if(errors.password && (errors.username || !errors.username)) helperText.password = "The password is wrong"; else helperText.password = ""
         return
