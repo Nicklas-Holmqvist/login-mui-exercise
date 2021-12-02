@@ -26,7 +26,6 @@ function Login(props:any) {
             return
         } 
     }
-
     /** When successefully create an account you switch to login page */
     function login() {
         setUser(true)
@@ -42,7 +41,10 @@ function Login(props:any) {
             }    
         <div className="mt-1" >
             <p>{loginInfo}</p>
-            <p className="pointer bold" onClick={changeUser}>{label}</p>
+            <p 
+                className="pointer bold" 
+                onClick={changeUser}
+            >{label}</p>
         </div>
     </div>
     )

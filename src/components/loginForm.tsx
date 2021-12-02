@@ -52,7 +52,6 @@ function LoginForm(props:any) {
             resetInput()
         }
     }
-
     /**
      * 
      * @param errors Fetch the errors from validation.tsx and set the helperText on the fields with errors

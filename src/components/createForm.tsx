@@ -47,7 +47,6 @@ function CreateForm(props:any) {
             controlPassword: "",
         })
     }
-
     /** Validates the users input */
     function validate() {
         setErrors(validCreate(inputValue))
