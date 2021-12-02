@@ -34,3 +34,15 @@
 .mt-2 {
     margin-top:2rem;
 }
+
+.bold {
+    font-weight: bold;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.under-line {
+    border-bottom: 1px solid black;
+}

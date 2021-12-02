@@ -1,8 +1,6 @@
-import { Button } from "@material-ui/core"
 import React, { useState } from "react"
 import CreateForm from "./createForm"
 import LoginForm from "./loginForm"
-
 
 function Login() {
 
@@ -31,13 +29,13 @@ function Login() {
     return (
     <div className="flex center column h-100">
         <h1>{header}</h1>
-        {user 
-        ? <LoginForm />
-        :  <CreateForm />
-        }       
+            {user 
+            ? <LoginForm />
+            : <CreateForm />
+            }    
         <div className="mt-1" >
             <p>{loginInfo}</p>
-            <Button variant="outlined" color="primary" onClick={changeUser}>{label}</Button>
+            <p className="pointer bold" onClick={changeUser}>{label}</p>
         </div>
     </div>
     )

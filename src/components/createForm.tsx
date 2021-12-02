@@ -2,39 +2,43 @@ import { Button, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import validations from "./validation";
 
+interface User {
+    username:string,
+    password:string,
+    controlPassword:string
+}
+
+interface Error {
+    username:any,
+    password:any,
+    controlPassword:any
+}
+
 function CreateForm() {
 
-    const {valids} = validations()
+    const {validCreate} = validations()
     
-    const username = 'Email'
-    const password = 'Password'
-    const controlPassword = 'Confirm password'
+    const username: string = 'Email'
+    const password: string = 'Password'
+    const controlPassword: string = 'Confirm password'
     
-    const [buttonLabel, setButtonLabel] = useState<string>('Create')
-    const [inputValue, setInputValue] = useState<{username:string, password:string, controlPassword:string}>({
+    const buttonLabel: string = 'Create'
+    const [inputValue, setInputValue] = useState<User>({
         username: "",
         password: "",
         controlPassword: ""
     })
 
-    const [errors, setErrors] = useState<{username:any, password:any, controlPassword:any}>({
+    const [errors, setErrors] = useState<Error>({
         username: undefined,
         password: undefined,
         controlPassword: undefined
     })
-    const [helperText, setHelperText] = useState<{username:string, password:string, controlPassword:string}>({
+    const [helperText, setHelperText] = useState<User>({
         username: "",
         password: "",
         controlPassword: ""
     })
-
-    function resetInput() {
-        setInputValue({
-            username: "",
-            password: "",
-            controlPassword: ""
-        })    
-    }
 
     function handleChange(e:any) {
         const value = e.target.value;
@@ -45,46 +49,31 @@ function CreateForm() {
         })     
     }
 
-    function resetValidation() {
-        if(errors.username === true || errors.password === true || errors.controlPassword === true) {
-            setErrors({
-                username: false,
-                password: false,
-                controlPassword: false,
-            })
-            setHelperText({
-                username: "",
-                password: "",
-                controlPassword: "",
-            });
-        }else return   
+    function resetInput() {
+        setInputValue({
+            username: "",
+            password: "",
+            controlPassword: "",
+        })
     }
 
     function validate() {
-        setErrors(valids(inputValue))
-        errorTexts(valids(inputValue))
-        const valid = Object.values(errors).every(item => item === false)
-        console.log(valid)
-
+        setErrors(validCreate(inputValue))
+        errorTexts(validCreate(inputValue))
+        const valid = Object.values(validCreate(inputValue)).every(item => item === false)
+        
         if(valid) {
-            // setLoadingButton(true)
-            // resetInput()
+            console.log('allt ok!')
+            localStorage.setItem('user', JSON.stringify({username: inputValue.username, password: inputValue.password}))
+            resetInput()
         }
     }    
 
-    function errorTexts(errors:any):any {
-    
-        if(errors.username) {
-            helperText.username = "Email format ex. myname@domain.com"       
-        } else helperText.username = ""
-    
-        if(errors.password) {
-            helperText.password = "The password needs more than 5 characters"      
-        } else helperText.password = ""
-    
-        if(errors.controlPassword) {
-            helperText.controlPassword = "The password does not match"       
-        } else helperText.controlPassword = ""   
+    function errorTexts(errors:Error) {    
+        if(errors.username) helperText.username = "Email format ex. myname@domain.com"; else helperText.username = ""    
+        if(errors.password) helperText.password = "The password needs more than 5 characters"; else helperText.password = ""    
+        if(errors.controlPassword) helperText.controlPassword = "The password does not match"; else helperText.controlPassword = ""   
+        return
     }
 
     return(

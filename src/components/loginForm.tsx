@@ -1,9 +1,21 @@
 
 import { Button, TextField } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import validations from './validation'
+
+interface User {
+    username:string,
+    password:string
+}
+
+interface Error {
+    username:any,
+    password:any
+}
 
 function LoginForm(props:any) {
 
+    const {validLogin} = validations()
     const username = 'Email'
     const password = 'Password'
     const controlPassword = 'Control password'
@@ -34,54 +46,22 @@ function LoginForm(props:any) {
         setInputValue({
             ...inputValue,
             [e.target.name]: value
-        })
-        resetValidation()        
-    }
-
-    function resetValidation() {
-        if(errors.username === true || errors.password === true) {
-            setErrors({
-                username: false,
-                password: false,
-            })
-            setHelperText({
-                username: "",
-                password: "",
-            });
-        }else return   
+        })     
     }
 
     function validate() {
-        erroUsername()
-        errorPassword()
+        setErrors(validLogin(inputValue))
+        errorTexts(validLogin(inputValue))
+        const valid = Object.values(validLogin(inputValue)).every(item => item === false)
+        if(valid) {
+            resetInput()
+        }
     }
 
-    function erroUsername() {
-        const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                
-        if(!inputValue.username.match(regexEmail)) {
-            setErrors({
-                ...errors,
-                username: true
-            });
-            setHelperText({
-                ...helperText,
-                username: "There is something wrong with the email"
-            });
-        } else return
-    }
-
-    function errorPassword() {
-        if(inputValue.password.length <= 5) {
-            setErrors({
-                ...errors,
-                password: true
-            });
-            setHelperText({
-                ...helperText,
-                password: "The password is wrong"
-            });
-        } else return
+    function errorTexts(errors:Error) {    
+        if(errors.username) helperText.username = "There is something wrong with the email"; else helperText.username = ""    
+        if(errors.password && (errors.username || !errors.username)) helperText.password = "The password is wrong"; else helperText.password = ""
+        return
     }
 
     return(
