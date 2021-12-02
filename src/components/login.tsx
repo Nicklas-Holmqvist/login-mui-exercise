@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import CreateForm from "./CreateForm"
-import LoginForm from "./LoginForm"
+import CreateForm from "./createForm"
+import LoginForm from "./loginForm"
 
 function Login(props:any) {
 
