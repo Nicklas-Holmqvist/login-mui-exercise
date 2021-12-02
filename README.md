@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+# Practicing React, TS and Material UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+After 10 weeks in Angular I felt I nedded to polish my skilles in React that we had learned in school earlier in the year.
+And I felt that I could practice code that I am going to work with on my next internship.
 
-In the project directory, you can run:
+I always have been a little afraid of inputs/textFields and validations. But after this one I feel a little bit more confident.
 
-### `npm start`
+I have created a simple login, create and logout page using React, TS and Material UI.
+The validation is set per field that have error. So multiple textFields is getting triggered with both error and helpText when clicking "submit".
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+I've got the validations solution from Brian Design on Youtube. He used classic form and input, and I used mui/core TextField and Button.
+Link to video: https://www.youtube.com/watch?v=KGFG-yQD7Dw
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Validations
 
-### `npm test`
+### Login
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Username = validates against localStorage
+- Password = validates against localStorage
 
-### `npm run build`
+### Create
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Username = validates against an Regex string and if the email already is in use, that validates against localStorage
+- Password = not shorter than 5 letters
+- ControlPassword = validates against Password
+- LocalStorage = setItem('user')
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Logout
+- LocalStorage = removeItem('use')
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Screens
 
-### `npm run eject`
+![login](https://user-images.githubusercontent.com/70426543/144493232-80b11362-4470-4168-9702-f4d26840208e.PNG)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![create](https://user-images.githubusercontent.com/70426543/144493301-a73bcd93-8f8d-46d5-9126-789ee5be3c7d.PNG)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![create-double-user](https://user-images.githubusercontent.com/70426543/144493330-51b107d6-1e33-4301-a66e-8b56c5178554.PNG)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Run project 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+npm start
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
