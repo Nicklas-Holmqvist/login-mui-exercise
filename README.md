@@ -1,4 +1,4 @@
-# Practicing Form with React, TS and Material UI
+# Practicing validation with React, TS and Material UI
 
 ## Description
 
